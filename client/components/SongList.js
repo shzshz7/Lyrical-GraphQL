@@ -22,4 +22,4 @@ const query = gql`
     }
 `;
 
-export default graphql(query)(SongList);
+export default graphql(query)(SongList);// the component will rerender after the query execute, then the data will be in props!
