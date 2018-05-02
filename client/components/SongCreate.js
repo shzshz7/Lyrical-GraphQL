@@ -8,7 +8,7 @@ import query from '../queries/fetchSongs';
 class SongCreate extends Component {
     constructor (props) {
         super(props);
-        this.onSubmit = this.onSubmit.bind(this);//this is onw way to bind
+        // this.onSubmit = this.onSubmit.bind(this);//this is onw way to bind
 
         this.state = {title: ''};
     }
@@ -37,7 +37,7 @@ class SongCreate extends Component {
             <div>
                 <Link to="/">Back</Link>
                 <h3>Create a new song</h3>
-                <form onSubmit = {this.onSubmit}>{/* another wayt to bind is to use this.onSubmit.bind(this) here */}
+                <form onSubmit = {this.onSubmit.bind(this)}>{/* another wayt to bind is to use this.onSubmit.bind(this) here */}
                     <label>Song Title:</label>
                     <input 
                         onChange={event => this.setState({title: event.target.value})}

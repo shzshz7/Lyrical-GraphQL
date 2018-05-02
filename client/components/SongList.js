@@ -6,19 +6,35 @@ import { Link } from 'react-router';
 import query from '../queries/fetchSongs';
 
 class SongList extends Component {
+    onSongDelete(id) {
+        this.props.mutate(
+            {
+                variables: { id } //id: id
+                //.then(() => this.props.date.refetch());this does not work, try use refetchQueries
+                , refetchQueries: [{
+                    query
+                }]
+            })
+    }
+
     renderSongs() {
-        return this.props.data.songs.map(song => {
+        return this.props.data.songs.map(({ id, title }) => {//destructure the parameter from "song"
             return (
-                <li key={song.id} className="collection-item">
-                    {song.title}
-                    <button className="material-icons btn-medium right">clear</button>
+                <li key={id} className="collection-item">
+                    {title}
+                    <i
+                        className="material-icons right"
+                        onClick={() => this.onSongDelete(id)}//have to use arrow function, or the deleteSong function will call immediately
+                    >
+                        delete
+                    </i>
                 </li>
             );
         });
     }
 
     render() {
-        console.log(this.props);
+        // console.log(this.props);
         if (this.props.data.loading) {
             return <div>Loading...!</div>
         }
@@ -27,6 +43,7 @@ class SongList extends Component {
             <div>
                 <ul className="collection">
                     {this.renderSongs()}
+                    {/* only event handler function need to bind? here this function does not need bind?*/}
                 </ul>
                 <Link to='/songs/new'
                     className="btn-floating btn-large red right"
@@ -41,7 +58,7 @@ class SongList extends Component {
 const mutation = gql`
     mutation DeleteSong($id:ID){
         deleteSong(id:$id){
-        id
+            id
         }     
     }
 `
