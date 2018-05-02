@@ -10,21 +10,23 @@ class SongList extends Component {
         this.props.mutate(
             {
                 variables: { id } //id: id
-                //.then(() => this.props.date.refetch());this does not work, try use refetchQueries
-                , refetchQueries: [{
-                    query
-                }]
-            })
+                //.then(() => this.props.data.refetch());
+                // , refetchQueries: [{
+                //     query
+                // }]
+            }).then(() => this.props.data.refetch())//this is another way to refetch. we can use this here because this query is bond to this component, and the data is in props
     }
 
     renderSongs() {
         return this.props.data.songs.map(({ id, title }) => {//destructure the parameter from "song"
             return (
                 <li key={id} className="collection-item">
-                    {title}
+                    <Link to={`/songs/${id}`}>
+                        {title}
+                    </Link>
                     <i
-                        className="material-icons right"
-                        onClick={() => this.onSongDelete(id)}//have to use arrow function, or the deleteSong function will call immediately
+                        className="material-icons"
+                        onClick={() => this.onSongDelete(id)}//have to use arrow function, or the deleteSong function will call immediately when rendering
                     >
                         delete
                     </i>
@@ -34,7 +36,7 @@ class SongList extends Component {
     }
 
     render() {
-        // console.log(this.props);
+        console.log(this.props);
         if (this.props.data.loading) {
             return <div>Loading...!</div>
         }
