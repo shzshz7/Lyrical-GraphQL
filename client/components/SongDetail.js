@@ -19,7 +19,7 @@ class SongDetail extends Component {
             return <div>Loading...!</div>
         }
 
-        console.log(song);
+        // console.log(song);
         return (
             <div>
                 <Link to='/'>Back</Link>

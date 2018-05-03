@@ -12,7 +12,7 @@ import SongCreate from './components/SongCreate';
 import SongDetail from './components/SongDetail';
 
 const client = new ApolloClient({
-  dataIdFromObject: o => o.id
+  dataIdFromObject: o => o.id//this will ask apollo client to identify object by id, and it can detect changes on objects and refresh the query
 });
 
 const Root = () => {
