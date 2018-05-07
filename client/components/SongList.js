@@ -21,7 +21,7 @@ class SongList extends Component {
         return this.props.data.songs.map(({ id, title }) => {//destructure the parameter from "song"
             return (
                 <li key={id} className="collection-item">
-                    <Link to={`/songs/${id}`}>
+                    <Link to={`/songs/${id}`} >
                         {title}
                     </Link>
                     <i

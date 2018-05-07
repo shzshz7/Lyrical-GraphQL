@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {graphql} from 'react-apollo';
 import gql from 'graphql-tag';
-import fetchSong from '../queries/fetchSong';
 
 class LyricCreate extends Component {
     constructor(props){
@@ -20,7 +19,22 @@ class LyricCreate extends Component {
             variables:{
                 content: this.state.content,
                 songId: this.props.songId
-            }
+            },
+            update: (store, {data: {addToSong}}) => {//this is to update the list immediately
+              const data = store.readQuery({query:querySong});//read from store
+              data.lyrics.push(addToSong);//add new item
+              store.writeQuery({query:gql`
+                  {
+                      song(id:"${this.props.songId}"){
+                      id
+                      title
+                      lyrics {
+                          id
+                          content
+                      }`
+                      , data});
+            }//write back to store
+
             // ,refetchQueries:[{
             //     query:gql`
             //     {
